@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web_python:
+    image: python:3.8-buster
+    volumes:
+      - .:/mnt
+    stdin_open: true
+    tty: true
+    working_dir: /mnt
+    command:  /bin/bash
+
+  web_mysql:
+    platform: 'linux/amd64'
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: django_agri
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+
+volumes:
+    mysql_data:
